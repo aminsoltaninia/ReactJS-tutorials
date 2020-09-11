@@ -11,7 +11,7 @@ function Card(props) {
             <section className="card-body">
                 <p>{body}</p>
             </section>
-            <footer>
+            <footer className="card-footer">
                 <p>card footer</p>
             </footer>
         </div>
