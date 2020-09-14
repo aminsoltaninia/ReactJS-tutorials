@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Card from './componentFunc/Card';
-import CardClassBase from './components/CardClassBase'
+import CardClassBase from './components/CardClassBase';
+import MyAlert from './components/alert'
 import {Carousel} from  'react-bootstrap'
 import ErrorBoundry from './components/errors/ErrorBaundry'
 
@@ -60,7 +61,12 @@ class App extends Component {
 
     loading: false,
 
-    btnHover: false
+    btnHover: false,
+
+    alert : {
+      
+      show :  true
+    }
 
   }
 
@@ -98,24 +104,48 @@ class App extends Component {
     })
 
   }
+   
+  // funct for Alert class
+  setShow(status){
+    
+    this.setState(prevState => {
+      return { 
+        alert : {
+          show : status
+        }
+      }
+    }
+    )
+  }
 
-
+  deleteArticle(articleId){
+      this.setState((prevState)=>{
+         return {
+          
+             article : prevState.article.filter(Item=>Item.id!==articleId)
+          
+         }
+      })
+  }
+  
   render() {
     
     console.log("[app.js] run render ")
     let articleList = this.state.article.map((article, index) =>
-      article.active ?  <CardClassBase key={index} title={article.title} body={article.body} />: null
+      article.active ?  <CardClassBase key={index} id={article.id} title={article.title} body={article.body} deleteArticle={this.deleteArticle.bind(this)}/>: null
 
     )
 
     let btnClasses = ['btn-more']
     if (this.state.btnHover)
       btnClasses.push('active')
-
+     
+     let {alert } = this.state; 
     return (
 
       <div className="app">
         <div className="container">
+          <MyAlert show={alert.show} setShow={this.setShow.bind(this)}/>
           <Carousel>
             <Carousel.Item>
               <img

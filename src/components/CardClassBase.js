@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import './Card.css'
 import { Card } from 'react-bootstrap'
 
-class CardClassBase extends Component {
+class CardClassBase extends PureComponent {
 
     state = {
         
@@ -24,6 +24,10 @@ class CardClassBase extends Component {
         console.log("[cardClass.js] run componentDidMount")
     }
 
+  
+    componentWillUnmount(){// run befor deleting 
+        console.log("[cardClass.js] run componentWillUnmount")
+    }
     evenHander(e) {
         // console.log("hhhhh")
         // console.log("this after bind : ", this)/// this is a value after bind ... tazrigh mikonim beehesh this ro 
@@ -33,7 +37,7 @@ class CardClassBase extends Component {
     render() {
         console.log("[cardClass.js] run render ")
         //  console.log("this : ", this)
-        let { title, body } = this.props;
+        let { id ,title, body, deleteArticle } = this.props;
         return (
             <Card>
 
@@ -47,6 +51,7 @@ class CardClassBase extends Component {
                 </section>
                 <footer className="card-footer">
                     <p>card footer</p>
+                    <button onClick={()=>  deleteArticle(id)}>delete</button>
                 </footer>
 
 
